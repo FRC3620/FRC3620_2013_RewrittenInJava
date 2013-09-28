@@ -12,7 +12,7 @@
 package org.usfirst.frc3620.FRC36202013RobotRedo;
     
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType; import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType; 
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -86,7 +86,7 @@ public class RobotMap {
         driveSubsystemDriveEncoder = new Encoder(1, 1, 1, 2, false, EncodingType.k4X);
 	LiveWindow.addSensor("DriveSubsystem", "DriveEncoder", driveSubsystemDriveEncoder);
         driveSubsystemDriveEncoder.setDistancePerPulse(1.0);
-        driveSubsystemDriveEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+        //driveSubsystemDriveEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
         driveSubsystemDriveEncoder.start();
         liftSubsystemChinupController = new Victor(1, 6);
 	LiveWindow.addActuator("LiftSubsystem", "ChinupController", (Victor) liftSubsystemChinupController);

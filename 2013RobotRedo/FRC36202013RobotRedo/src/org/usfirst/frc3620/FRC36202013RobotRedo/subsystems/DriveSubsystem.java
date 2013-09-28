@@ -14,7 +14,8 @@ package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
 import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType; import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType; 
+//import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
