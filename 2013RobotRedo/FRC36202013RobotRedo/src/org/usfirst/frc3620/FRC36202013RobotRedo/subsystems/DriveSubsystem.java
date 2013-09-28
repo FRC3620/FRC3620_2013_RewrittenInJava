@@ -11,7 +11,11 @@
 
 package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
 import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
@@ -42,6 +46,30 @@ public class DriveSubsystem extends Subsystem {
 	
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public void arcadeDrive (GenericHID hid, boolean turbo) {
+        primaryDrive.arcadeDrive(hid);
+        if (turbo) {
+            secondaryDrive.arcadeDrive(hid);
+        } else {
+            secondaryDrive.drive(0, 0);
+        }
+    }
+    
+    /**
+     * Drive under autonomous, using primaryDrive only.
+     * @param outputMagnitude
+     * @param curve 
+     */
+    public void drive (double outputMagnitude, double curve) {
+        primaryDrive.drive (outputMagnitude, curve);
+        secondaryDrive.drive(0, 0);
+    }
+    
+    public void halt() {
+        primaryDrive.drive (0, 0);
+        secondaryDrive.drive (0, 0);
     }
 }
 
