@@ -46,5 +46,29 @@ public class DriveSubsystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public void arcadeDrive (GenericHID hid, boolean turbo) {
+        primaryDrive.arcadeDrive(hid);
+        if (turbo) {
+            secondaryDrive.arcadeDrive(hid);
+        } else {
+            secondaryDrive.drive(0, 0);
+        }
+    }
+    
+    /**
+     * Drive under autonomous, using primaryDrive only.
+     * @param outputMagnitude
+     * @param curve 
+     */
+    public void drive (double outputMagnitude, double curve) {
+        primaryDrive.drive (outputMagnitude, curve);
+        secondaryDrive.drive(0, 0);
+    }
+    
+    public void halt() {
+        primaryDrive.drive (0, 0);
+        secondaryDrive.drive (0, 0);
+    }
 }
 
