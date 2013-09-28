@@ -37,5 +37,16 @@ public class FlipperSubsystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    public void flipperBackward() {
+        flipperSpike.set(Relay.Value.kForward);
+        //System.out.println("Flipper In");
+    }
+    public void flipperForward() {
+        flipperSpike.set(Relay.Value.kReverse);
+        //System.out.println("Flipper Out");
+    }
+    public void flipperStop() {
+        flipperSpike.set(Relay.Value.kOff);
+    }
 }
 
