@@ -94,7 +94,7 @@ public class RobotMap {
         driveSubsystemDriveEncoder = new Encoder(1, 1, 1, 2, false, EncodingType.k4X);
 	LiveWindow.addSensor("DriveSubsystem", "DriveEncoder", driveSubsystemDriveEncoder);
         driveSubsystemDriveEncoder.setDistancePerPulse(1.0);
-        driveSubsystemDriveEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+        //driveSubsystemDriveEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
         driveSubsystemDriveEncoder.start();
         liftSubsystemChinupController = new Victor(1, 6);
 	LiveWindow.addActuator("LiftSubsystem", "ChinupController", (Victor) liftSubsystemChinupController);
