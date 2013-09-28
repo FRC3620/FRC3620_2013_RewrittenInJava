@@ -12,12 +12,13 @@
 package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.*;
-import org.usfirst.frc3620.FRC36202013RobotRedo.*;
-import org.usfirst.frc3620.FRC36202013RobotRedo.commands.DriveArcadeCommand;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
+import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
 
 /**
  *
