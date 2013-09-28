@@ -12,7 +12,6 @@
 package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 
 import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
-import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
 import edu.wpi.first.wpilibj.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -37,5 +36,20 @@ public class LiftSubsystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    public void liftRetract(){
+        //raises the robot (retracts the chinup arms)
+        chinupController.set(-.5);
+    }
+    
+    public void liftExtend(){
+        //lowers the robot (extends the chinup arms)
+        chinupController.set(.5);
+        
+    }
+    
+    public void liftHalt(){
+        //stops the chinup motors
+        chinupController.set(0);
+        
+    }
 }
-
