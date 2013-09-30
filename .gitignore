@@ -4,3 +4,14 @@
 *.jar
 *.war
 *.ear
+/2013RobotRedo/Wiring.html~
+/2013RobotRedo/FRC36202013RobotRedo/build/
+/2013RobotRedo/FRC36202013RobotRedo/nbproject/private/
+/FRC_3620_2013_Doug1/FRC36202013Doug1/build/
+/2013RobotRedo/2013 Robot Redo.toc
+/2013RobotRedo/2013 Robot Redo.aux
+/2013RobotRedo/2013 Robot Redo.log
+/2013RobotRedo/2013 Robot Redo.synctex.gz
+*.txt~
+*.properties~
+*.xml~
