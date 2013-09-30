@@ -17,6 +17,8 @@ import org.usfirst.frc3620.FRC36202013RobotRedo.subsystems.DriveSubsystem;
 public class  DriveTurnInPlaceCommand extends Command {
     DriveSubsystem driveSubsystem = Robot.driveSubsystem;
     
+    long t0;
+    
     private double howFar;
 
     public DriveTurnInPlaceCommand(double degrees) {
@@ -31,20 +33,23 @@ public class  DriveTurnInPlaceCommand extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        t0 = System.currentTimeMillis();
         driveSubsystem.resetGyro();
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (howFar > 0) {
             // turn right
-            driveSubsystem.drive(0, 1.0);
+            driveSubsystem.drive(0.25, 1.0);
         } else {
             // turn left
-            driveSubsystem.drive(0, -1.0);
+            driveSubsystem.drive(0.25, -1.0);
         }
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        if (System.currentTimeMillis() - t0 > 3000) return true;
+
         if (howFar > 0) {
             return driveSubsystem.readGyro() > howFar;
         } else {

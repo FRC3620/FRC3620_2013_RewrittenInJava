@@ -20,6 +20,8 @@ public class  DriveMoveInLineCommand extends Command {
     
     private double howFar;
     
+    private long t0;
+    
     public DriveMoveInLineCommand(double meters) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -33,17 +35,19 @@ public class  DriveMoveInLineCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         driveSubsystem.resetEncoder();
+        t0 = System.currentTimeMillis();
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (howFar > 0) {
-            driveSubsystem.drive(0.5, 0.0);
+            driveSubsystem.drive(0.25, 0.0);
         } else {
-            driveSubsystem.drive(-0.5, 0.0);
+            driveSubsystem.drive(-0.25, 0.0);
         }
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        if (System.currentTimeMillis() - t0 > 3000) return true;
         if (howFar > 0) {
             return driveSubsystem.readEncoder() > howFar;
         } else {

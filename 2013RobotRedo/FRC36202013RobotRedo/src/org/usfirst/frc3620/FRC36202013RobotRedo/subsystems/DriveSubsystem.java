@@ -14,7 +14,10 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
 import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
+import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMode;
 import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
 /**
  *
@@ -102,4 +105,13 @@ public class DriveSubsystem extends Subsystem {
     public boolean getReverseMode() {
         return reverseMode;
     }
+        public void onRobotModeChange (RobotMode robotMode) {
+        
+    }
+    
+    public void periodic (RobotMode robotMode) {
+        SmartDashboard.putNumber ("drive.l", Robot.driveSubsystem.leftDriveController.get());
+        SmartDashboard.putNumber ("drive.r", Robot.driveSubsystem.rightDriveController.get());
+    }
+
 }
