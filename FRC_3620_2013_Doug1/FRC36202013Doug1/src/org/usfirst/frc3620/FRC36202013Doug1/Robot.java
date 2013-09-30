@@ -107,14 +107,12 @@ public class Robot extends IterativeRobot {
     }
     
     void periodic(RobotMode mode) {
-        stuffNetworkTable.putNumber("voltage", driverStation.getBatteryVoltage());
+        SmartDashboard.putNumber("Voltage", driverStation.getBatteryVoltage());
         
         FRC3620SubsystemHelper.periodic(mode);
-        motorSubsystem.periodic(mode);
-        driveSubsystem.periodic(mode);
     }
     void onRobotModeTransition(RobotMode mode) {
-        SmartDashboard.putString("mode", mode.toString());
+        SmartDashboard.putString("Mode", mode.toString());
         FRC3620SubsystemHelper.onRobotModeTransition(mode);
     }
 }
