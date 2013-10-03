@@ -65,10 +65,10 @@ public class HarversterSubsystem extends Subsystem {
         wheelsController.set(0);
     }
     public void wheelsIn() {
-        wheelsController.set(1);
+        wheelsController.set(-1);
     }
     public void wheelsOut() {
-        wheelsController.set(-1);
+        wheelsController.set(1);
     }
     public void beltOff() {
         beltController.set(Relay.Value.kOff);
