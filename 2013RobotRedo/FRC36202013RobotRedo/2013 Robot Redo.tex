@@ -530,9 +530,9 @@ reads the auger position in degrees. I'll bet that updateDashboard() and isAuger
 
 \subsubsection{Actuators, Controllers, and Sensors}
 
-\textbf{HarvesterController} is the Victor controller for the harvester motors.
+\textbf{WheelsController} is the Victor controller for the harvester wheel motors.
 
-\textbf{BeltController} is the Victor controller for the right harvester motor. \textit{Chris: check the old robot; this could be a Spike. If so, make the change here.}
+\textbf{BeltController} is the Spike for the belt motor. change here.}
 
 \subsubsection{Commands}
 
@@ -598,26 +598,59 @@ reads the auger position in degrees. I'll bet that updateDashboard() and isAuger
 
 \subsubsection{Public Methods}
 
-\emph{This needs work.}
+There will be a HarvesterDirection Java class to represent the desired direction for the Harvester. A HarvesterDirection can have three values HarvesterDirection.IN, HarvesterDirection.OUT, HarvesterDirection.OFF.
 
-\noindent \texttt{\textbf{public boolean setHarvesterPower(double power)}} \\
-set the power for the harvester motors.
-
-\noindent \texttt{\textbf{public boolean setBeltPower(double power)}} \\
-set the power for the belt motor.
-
-\noindent \texttt{\textbf{public void setOnOffState(boolean b)}} \\
+\noindent
+\lstinline[]|public void setOnOffState(boolean b)| \\
 saves the current on/off state of the joystick button.
 
-\noindent \texttt{\textbf{public boolean getOnOffState()}} \\
+\noindent
+\lstinline[]|public boolean getOnOffState()| \\
 gets the current on/off state of the joystick button.
 
-\noindent \texttt{\textbf{public void setBeltDirection (Relay.Value direction)}} \\
-saves the desired belt direction. Relay.Value.kForward is inward, Relay.Value.kReverse is outward.
+\noindent
+\lstinline[]|public void toggleOnOffState()| \\
+toggles the current on/off state.
 
-\noindent \texttt{\textbf{public void setHarvesterDirection (Relay.Value direction)}} \\
-saves the desired harvester direction. Relay.Value.kForward is inward, Relay.Value.kReverse is outward.
+\noindent
+\lstinline[]|public void setBeltDirection (HarvesterDirection direction)| \\
+saves the desired manual belt direction.
 
+\noindent
+\lstinline[]|public HarvesterDirection getBeltDirection ()| \\
+gets the desired manual belt direction.
+
+\noindent
+\lstinline[]|public void setWheelDirection (Relay.Value direction)| \\
+saves the desired harvester wheel direction.
+
+\noindent
+\lstinline[]|public HarvesterDirection getWheelDirection ()| \\
+gets the desired manual wheel direction.
+
+\noindent
+\lstinline[]|public void wheelsOff()| \\
+turns the wheel motors off.
+
+\noindent
+\lstinline[]|public void wheelsIn()| \\
+runs the wheel motors so that they bring disks in.
+
+\noindent
+\lstinline[]|public void wheelsOut()| \\
+runs the wheel motors so that they spew disks out.
+
+\noindent
+\lstinline[]|public void beltOff()| \\
+turns the belt motor off.
+
+\noindent
+\lstinline[]|public void beltIn()| \\
+runs the belt motor so that it brings disks in.
+
+\noindent
+\lstinline[]|public void beltOut()| \\
+runs the belt motor so that it spews disks out.
 %------------------------------------------------------------
 
 \subsection{ShooterTiltSubsystem}
@@ -710,25 +743,29 @@ reads the current shooter tilt angle.
 
 \begin{tabular}{|l|l|l|l|l|}
 \hline \emph{Name} & \textbf{Joystick} & Button Number & Command & When to Run \\ 
-\hline LiftExtend & Driver Joystick & ? & LiftExtendCommand & whileHeld  \\ 
-\hline LiftRetract & Driver Joystick & ? & LiftRetractCommand & whileHeld  \\ 
+\hline LiftExtend & Driver Joystick & 6 & LiftExtendCommand & whileHeld  \\ 
+\hline LiftRetract & Driver Joystick & 7 & LiftRetractCommand & whileHeld  \\ 
+\hline DriveTurboEnable & Driver Joystick & 3 & (none) & (none)  \\ 
+\hline DriveDirectionToggle & Driver Joystick & 8 & (none) & (none)  \\ 
+\hline HarvesterOnOff & Driver Joystick & 1 & HarvesterToggleCommand & whenPressed  \\ 
 \hline ShooterOn & Driver Joystick & ? & ShooterOnCommand & whileHeld  \\ 
-\hline ShooterFaster & Driver Joystick & ? & ShooterFasterCommand & whenPressed  \\ 
-\hline ShooterSlower & Driver Joystick & ? & ShooterSlowerCommand & whenPressed  \\ 
-\hline FlipperButton & Driver Joystick & ? & FlipperFlipCommand & whenPressed  \\ 
 \hline FlipperButton2 & Control Panel & 1 & FlipperFlipCommand & whenPressed  \\ 
 \hline FlipperForward & Control Panel & 8 & FlipperForwardCommand & whileHeld  \\ 
 \hline FlipperBackward & Control Panel &7? & FlipperBackwardCommand & whileHeld  \\ 
 \hline AugerUp & Control Panel & 10 & AugerUpCommand & whileHeld  \\ 
 \hline AugerDown & Control Panel & 9 & AugerDownCommand & whileHeld  \\ 
-\hline HarvesterOnOff & Driver Joystick & ? & HarvesterToggleCommand & whenPressed  \\ 
 \hline HarvesterIn & Control Panel & 6 & HarvesterWheelsInManualCommand & whileHeld  \\ 
 \hline HarvesterOutt & Control Panel & 5 & HarvesterWheelsOutManualCommand & whileHeld \\ 
 \hline BeltIn & Control Panel & 4 & HarvesterBeltInManualCommand & whileHeld  \\ 
 \hline BeltOut & Control Panel & 3 & HarvesterBeltOutManualCommand & whileHeld \\ 
-\hline ShooterTiltOnOff & Driver Joystick & ? & ShooterTiltToggleCommand & whenPressed  \\ 
-\hline ShooterTiltUp & Driver Joystick & ? & ShooterTiltBumpAngleUpCommand & whenPressed  \\ 
-\hline ShooterTiltDown & Driver Joystick & ? & ShooterTiltBumpAngleDownCommand & whenPressed  \\ 
+\hline FlipperButton & Shooter Joystick & 1 & FlipperFlipCommand & whenPressed  \\ 
+\hline ShooterOn & Shooter Joystick & 4 & ShooterOnCommand & whileHeld  \\ 
+\hline ShooterFaster & Driver Joystick & 3 & ShooterFasterCommand & whenPressed  \\ 
+\hline ShooterSlower & Driver Joystick & 2 & ShooterSlowerCommand & whenPressed  \\ 
+\hline AugerIndex & Shooter Joystick & 5 & AugerIndexCommand & whenPressed  \\ 
+\hline ShooterTiltOff & Shooter Joystick & 8 & ShooterTiltDisableCommand & whenPressed  \\ 
+\hline ShooterTiltUp & Shooter Joystick & 7 & ShooterTiltBumpAngleUpCommand & whenPressed  \\ 
+\hline ShooterTiltDown & Shooter Joystick & 1\emph{(!)} & ShooterTiltBumpAngleDownCommand & whenPressed  \\ 
 \hline 
 \end{tabular} 
 
