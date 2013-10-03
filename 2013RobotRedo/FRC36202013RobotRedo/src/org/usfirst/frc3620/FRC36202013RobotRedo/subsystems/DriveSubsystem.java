@@ -108,7 +108,6 @@ public class DriveSubsystem extends Subsystem {
     
     // TODO make sure we do the same for the secondary drive
         boolean savedDriveSafety = primaryDrive.isSafetyEnabled();
-
     public void onRobotModeChange (RobotMode robotMode) {
         if (robotMode == RobotMode.TEST) {
             savedDriveSafety = primaryDrive.isSafetyEnabled();
@@ -117,12 +116,11 @@ public class DriveSubsystem extends Subsystem {
         } else {
             System.out.println("put drive safety back: " + savedDriveSafety);
             primaryDrive.setSafetyEnabled(savedDriveSafety);
-        };
+        }
      }
     
     public void periodic (RobotMode robotMode) {
         SmartDashboard.putNumber ("drive.l", Robot.driveSubsystem.leftDriveController.get());
         SmartDashboard.putNumber ("drive.r", Robot.driveSubsystem.rightDriveController.get());
     }
-
 }
