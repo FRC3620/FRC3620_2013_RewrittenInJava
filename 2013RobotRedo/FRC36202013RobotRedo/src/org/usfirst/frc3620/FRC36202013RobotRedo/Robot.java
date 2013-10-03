@@ -125,11 +125,15 @@ public class Robot extends IterativeRobot {
     
     void onRobotModeChange (RobotMode robotMode) {
         driveSubsystem.onRobotModeChange(robotMode);
+        harversterSubsystem.onRobotModeChange(robotMode);
+        
         SmartDashboard.putString("Mode", robotMode.toString());
     }
     
     void periodic (RobotMode robotMode) {
        driveSubsystem.periodic(robotMode);
+       harversterSubsystem.periodic(robotMode);
+       
        SmartDashboard.putNumber("Voltage", DriverStation.getInstance().getBatteryVoltage());
        SmartDashboard.putNumber("MatchTime", DriverStation.getInstance().getMatchTime());
     }

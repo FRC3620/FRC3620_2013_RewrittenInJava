@@ -13,6 +13,7 @@ package org.usfirst.frc3620.FRC36202013RobotRedo.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
+import org.usfirst.frc3620.FRC36202013RobotRedo.HarvesterDirection;
 
 /**
  *
@@ -29,6 +30,8 @@ public class  HarvesterWheelOutManualCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+                Robot.harversterSubsystem.setHarvesterDirection(HarvesterDirection.OUT);
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,10 +45,13 @@ public class  HarvesterWheelOutManualCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+                Robot.harversterSubsystem.setHarvesterDirection(HarvesterDirection.OFF);
+
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

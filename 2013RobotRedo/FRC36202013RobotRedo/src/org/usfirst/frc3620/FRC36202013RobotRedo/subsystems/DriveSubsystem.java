@@ -105,9 +105,20 @@ public class DriveSubsystem extends Subsystem {
     public boolean getReverseMode() {
         return reverseMode;
     }
-        public void onRobotModeChange (RobotMode robotMode) {
-        
-    }
+    
+    // TODO make sure we do the same for the secondary drive
+        boolean savedDriveSafety = primaryDrive.isSafetyEnabled();
+
+    public void onRobotModeChange (RobotMode robotMode) {
+        if (robotMode == RobotMode.TEST) {
+            savedDriveSafety = primaryDrive.isSafetyEnabled();
+            System.out.println("disabling drive safety");
+            primaryDrive.setSafetyEnabled(false);
+        } else {
+            System.out.println("put drive safety back: " + savedDriveSafety);
+            primaryDrive.setSafetyEnabled(savedDriveSafety);
+        };
+     }
     
     public void periodic (RobotMode robotMode) {
         SmartDashboard.putNumber ("drive.l", Robot.driveSubsystem.leftDriveController.get());
