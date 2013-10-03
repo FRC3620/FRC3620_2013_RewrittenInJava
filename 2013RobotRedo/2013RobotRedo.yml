@@ -410,7 +410,7 @@ Children:
   - Name: HarversterSubsystem
     Base: Subsystem
     Children:
-    - Name: HarvesterController
+    - Name: WheelsController
       Base: Speed Controller
       Children: []
       Properties:
@@ -608,6 +608,30 @@ Children:
           name: Button
           validators: null
           value: '8'
+        Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
+          name: Joystick, validators: null, value: DriveJoystick}
+        When to Run: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id014
+          default: whileHeld
+          name: When to Run
+          validators: null
+          value: whenPressed
+    - Name: HarvesterToggleOnOff
+      Base: Joystick Button
+      Children: []
+      Properties:
+        Command: !!robotbuilder.data.properties.TypeSelectionProperty
+          default: None
+          name: Command
+          type: Command
+          validators: *id012
+          value: HarvesterToggleCommand
+        Button: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id013
+          default: '1'
+          name: Button
+          validators: null
+          value: '1'
         Joystick: !!robotbuilder.data.properties.ParentProperty {default: parent,
           name: Joystick, validators: null, value: DriveJoystick}
         When to Run: !!robotbuilder.data.properties.ChoicesProperty
