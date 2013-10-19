@@ -11,11 +11,9 @@
 
 package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.*;
-import org.usfirst.frc3620.FRC36202013RobotRedo.*;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
 
 
 /**
@@ -63,7 +61,7 @@ public class AugerSubsystem extends Subsystem {
       augerController.set(-.5);
   }
   public boolean readAugerLimitSwitch(){
-      augerLimitSwitch.get();
+      return augerLimitSwitch.get();
   }
   
   
