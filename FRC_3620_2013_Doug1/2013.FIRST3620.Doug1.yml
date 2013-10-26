@@ -7,35 +7,83 @@ Children:
 - Name: Subsystems
   Base: Subsystems
   Children:
+  - Name: MotorSubsystem
+    Base: Subsystem
+    Children:
+    - Name: MotorController
+      Base: Speed Controller
+      Children: []
+      Properties:
+        Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id001 ['1', '2']
+          default: '1'
+          name: Output Module (Digital)
+          validators: &id002 [PWMOutput]
+          value: '1'
+        Type: !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id003 [Victor, Jaguar, Talon]
+          default: Victor
+          name: Type
+          validators: null
+          value: Victor
+        Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
+          choices: &id004 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+          default: '1'
+          name: Output Channel (PWM)
+          validators: &id005 [PWMOutput]
+          value: '6'
+    - Name: AnalogAccelerometer
+      Base: Accelerometer
+      Children: []
+      Properties:
+        Zero G Volts: !!robotbuilder.data.properties.DoubleProperty {default: 2.5,
+          name: Zero G Volts, validators: null, value: 2.5}
+        Volts Per G: !!robotbuilder.data.properties.DoubleProperty {default: '1',
+          name: Volts Per G, validators: null, value: 1.0}
+        Input Module (Analog): !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['1', '2']
+          default: '1'
+          name: Input Module (Analog)
+          validators: [AnalogInput]
+          value: '1'
+        Input Channel (Analog): !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['1', '2', '3', '4', '5', '6', '7', '8']
+          default: '1'
+          name: Input Channel (Analog)
+          validators: [AnalogInput]
+          value: '1'
+    Properties:
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
   - Name: DriveSubsystem
     Base: Subsystem
     Children:
-    - Name: PrimaryDrive
+    - Name: Robot Drive
       Base: Robot Drive 2
       Children:
-      - Name: PrimaryLeft
+      - Name: LeftDriveController
         Base: Speed Controller
         Children: []
         Properties:
           Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-            choices: &id001 ['1', '2']
+            choices: *id001
             default: '1'
             name: Output Module (Digital)
-            validators: &id002 [PWMOutput]
+            validators: *id002
             value: '1'
           Type: !!robotbuilder.data.properties.ChoicesProperty
-            choices: &id003 [Victor, Jaguar, Talon]
+            choices: *id003
             default: Victor
             name: Type
             validators: null
             value: Victor
           Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
-            choices: &id004 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+            choices: *id004
             default: '1'
             name: Output Channel (PWM)
-            validators: &id005 [PWMOutput]
+            validators: *id005
             value: '1'
-      - Name: PrimaryRight
+      - Name: RightDriveController
         Base: Speed Controller
         Children: []
         Properties:
@@ -68,88 +116,16 @@ Children:
           default: 1
           name: Right Motor
           type: PIDOutput
-          validators: &id006 [RobotDrive2, ChildDropdownSelected]
-          value: DriveSubsystem PrimaryRight
+          validators: [RobotDrive2, ChildDropdownSelected]
+          value: DriveSubsystem RightDriveController
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 1.0}
         Left Motor: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 0
           name: Left Motor
           type: PIDOutput
-          validators: &id007 [RobotDrive2, ChildDropdownSelected]
-          value: DriveSubsystem PrimaryLeft
-        Right Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Right Motor Inverted, validators: null, value: false}
-        Safety Expiration Time: !!robotbuilder.data.properties.DoubleProperty {default: 0.1,
-          name: Safety Expiration Time, validators: null, value: 0.1}
-    - Name: TurboDrive
-      Base: Robot Drive 2
-      Children:
-      - Name: TurboLeft
-        Base: Speed Controller
-        Children: []
-        Properties:
-          Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id001
-            default: '1'
-            name: Output Module (Digital)
-            validators: *id002
-            value: '1'
-          Type: !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id003
-            default: Victor
-            name: Type
-            validators: null
-            value: Victor
-          Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id004
-            default: '1'
-            name: Output Channel (PWM)
-            validators: *id005
-            value: '3'
-      - Name: TurboRight
-        Base: Speed Controller
-        Children: []
-        Properties:
-          Output Module (Digital): !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id001
-            default: '1'
-            name: Output Module (Digital)
-            validators: *id002
-            value: '1'
-          Type: !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id003
-            default: Victor
-            name: Type
-            validators: null
-            value: Victor
-          Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
-            choices: *id004
-            default: '1'
-            name: Output Channel (PWM)
-            validators: *id005
-            value: '4'
-      Properties:
-        Sensitivity: !!robotbuilder.data.properties.DoubleProperty {default: 0.5,
-          name: Sensitivity, validators: null, value: 0.5}
-        Safety Enabled: !!robotbuilder.data.properties.BooleanProperty {default: true,
-          name: Safety Enabled, validators: null, value: true}
-        Left Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {default: false,
-          name: Left Motor Inverted, validators: null, value: false}
-        Right Motor: !!robotbuilder.data.properties.ChildSelectionProperty
-          default: 1
-          name: Right Motor
-          type: PIDOutput
-          validators: *id006
-          value: DriveSubsystem TurboRight
-        Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
-          name: Maximum Output, validators: null, value: 1.0}
-        Left Motor: !!robotbuilder.data.properties.ChildSelectionProperty
-          default: 0
-          name: Left Motor
-          type: PIDOutput
-          validators: *id007
-          value: DriveSubsystem TurboLeft
+          validators: [RobotDrive2, ChildDropdownSelected]
+          value: DriveSubsystem LeftDriveController
         Right Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {default: false,
           name: Right Motor Inverted, validators: null, value: false}
         Safety Expiration Time: !!robotbuilder.data.properties.DoubleProperty {default: 0.1,
