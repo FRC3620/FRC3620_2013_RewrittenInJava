@@ -212,7 +212,7 @@ The default command will be the DriveArcadeCommand command.
 \begin{description}[topsep=0ex]
 \item[requires] DriveSubsystem
 \item[initialization]  use resetGyro()
-\item[execute] Uses the arcadeDrive method to drive the robot.
+\item[execute] Uses the autonomousDrive, autonomousArcadeDrive, or autonomousTankDrive method to drive the robot.
 \item[isDone] finishes when the robot has turned far enough.
 \item[end] Turns off drive.
 \item[interrupted] Same as end();
@@ -222,7 +222,7 @@ The default command will be the DriveArcadeCommand command.
 \begin{description}[topsep=0ex]
 \item[requires] DriveSubsystem
 \item[initialization]  use resetEncoder()
-\item[execute] Uses the arcadeDrive method to drive the robot.
+\item[execute] Uses the autonomousDrive, autonomousArcadeDrive, or autonomousTankDrive method to drive the robot.
 \item[isDone] finishes when the robot has moved far enough.
 \item[end] Turns off drive.
 \item[interrupted] Same as end();
@@ -246,9 +246,23 @@ drives the robot using just the PrimaryDrive if turbo is false, or both PrimaryD
 The robot drives in reverse if reverse mode is toggled on.
 
 \noindent
-\lstinline[]|public void drive (double outputMagnitude, double curve)| \\
+\lstinline[]|public void autonomousDrive (double outputMagnitude, double curve)| \\
 uses the PrimaryDrive to drive the robot. 
 This is for use by autonomous modes.
+
+\noindent
+\lstinline[]|public void autonomousArcadeDrive (double move, double rotate)| \\
+uses the PrimaryDrive to drive the robot, as if a joystick were positioned at (move, rotate). 
+The reverse mode toggle is ignored (don't want the reverse mode setting screwing up autonomous).
+This is for use by autonomous modes.
+\textbf{Remember that Y axis pushed forward is a negative Y!}
+
+\noindent
+\lstinline[]|public void autonomousTankDrive (double l, double r)| \\
+uses the PrimaryDrive to drive the robot, with left side set to 'l' and right side set to 'r'.
+The reverse mode toggle is ignored (don't want the reverse mode setting screwing up autonomous).
+This is for use by autonomous modes.
+\textbf{Remember that Y axis pushed forward is a negative Y!}
 
 \noindent
 \lstinline[]|public void halt ()| \\
