@@ -9,20 +9,10 @@
 // it from being updated in th future.
 package org.usfirst.frc3620.FRC36202013RobotRedo;
     
-import edu.wpi.first.wpilibj.AnalogChannel;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType; 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
-import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Jaguar;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.livewindow.*;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -66,7 +56,7 @@ public class RobotMap {
         driveSubsystemPrimaryDrive.setExpiration(0.1);
         driveSubsystemPrimaryDrive.setSensitivity(0.5);
         driveSubsystemPrimaryDrive.setMaxOutput(1.0);
-        driveSubsystemPrimaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
+        driveSubsystemPrimaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);        
         driveSubsystemLeftTurboController = new Jaguar(1, 4);
 	LiveWindow.addActuator("DriveSubsystem", "LeftTurboController", (Jaguar) driveSubsystemLeftTurboController);
         
@@ -79,7 +69,7 @@ public class RobotMap {
         driveSubsystemSecondaryDrive.setExpiration(0.1);
         driveSubsystemSecondaryDrive.setSensitivity(0.5);
         driveSubsystemSecondaryDrive.setMaxOutput(1.0);
-        driveSubsystemSecondaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
+        driveSubsystemSecondaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);        
         driveSubsystemGyro = new Gyro(1, 1);
 	LiveWindow.addSensor("DriveSubsystem", "Gyro", driveSubsystemGyro);
         driveSubsystemGyro.setSensitivity(0.007);
