@@ -8,10 +8,9 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package org.usfirst.frc3620.FRC36202013RobotRedo.commands;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
-import org.usfirst.frc3620.FRC36202013RobotRedo.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.command.*;
+import org.usfirst.frc3620.FRC36202013RobotRedo.*;
+import org.usfirst.frc3620.FRC36202013RobotRedo.subsystems.*;
 /**
  *
  */
@@ -21,6 +20,10 @@ public class  DriveMoveInLineCommand extends Command {
     private double howFar;
     
     private long t0;
+    
+    public DriveMoveInLineCommand() {
+        this(1.0);
+    }
     
     public DriveMoveInLineCommand(double meters) {
         // Use requires() here to declare subsystem dependencies
@@ -40,14 +43,15 @@ public class  DriveMoveInLineCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (howFar > 0) {
-            driveSubsystem.drive(0.25, 0.0);
+            driveSubsystem.driveCorrectly(0, -0.5);
         } else {
-            driveSubsystem.drive(-0.25, 0.0);
+            driveSubsystem.driveCorrectly(0, 0.5);
         }
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if (System.currentTimeMillis() - t0 > 3000) return true;
+        System.out.println(driveSubsystem.readEncoder());
+        //if (System.currentTimeMillis() - t0 > 3000) return true;
         if (howFar > 0) {
             return driveSubsystem.readEncoder() > howFar;
         } else {

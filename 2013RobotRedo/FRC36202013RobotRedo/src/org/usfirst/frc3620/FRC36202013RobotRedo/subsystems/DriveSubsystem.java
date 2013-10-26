@@ -72,7 +72,12 @@ public class DriveSubsystem extends Subsystem {
      * @param curve
      */
     public void drive(double outputMagnitude, double curve) {
-        primaryDrive.drive(outputMagnitude, curve);
+        //primaryDrive.drive(outputMagnitude, curve);
+        //secondaryDrive.drive(0, 0);
+        System.out.println("Drive is broken");
+    }
+    public void driveCorrectly(double x, double y) {
+        primaryDrive.arcadeDrive(x, y);
         secondaryDrive.drive(0, 0);
     }
     /**
@@ -92,7 +97,7 @@ public class DriveSubsystem extends Subsystem {
         driveEncoder.reset();
     }
     public double readEncoder() {
-        return driveEncoder.getDistance();
+        return driveEncoder.getDistance() * 0.001; //reverses sign because encoders were all muggered(put on backwards)
     }
     public void toggleReverseMode() {
         synchronized (this) {
