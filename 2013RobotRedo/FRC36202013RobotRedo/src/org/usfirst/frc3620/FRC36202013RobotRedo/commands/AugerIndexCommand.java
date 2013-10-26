@@ -11,8 +11,8 @@
 
 package org.usfirst.frc3620.FRC36202013RobotRedo.commands;
 
-import edu.wpi.first.wpilibj.command.*;
-import org.usfirst.frc3620.FRC36202013RobotRedo.*;
+import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
 
 /**
  *
@@ -48,7 +48,7 @@ public class  AugerIndexCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         elapsedTime = System.currentTimeMillis() - startTime;
-        if(elapsedTime < 500){
+        if(elapsedTime < 1000){
             return false;
         }
         if(Robot.augerSubsystem.isAugerNeutral() == true){

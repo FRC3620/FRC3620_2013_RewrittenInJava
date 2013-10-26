@@ -11,9 +11,11 @@
 
 package org.usfirst.frc3620.FRC36202013RobotRedo.subsystems;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc3620.FRC36202013RobotRedo.RobotMap;
+import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.*;
+import org.usfirst.frc3620.FRC36202013RobotRedo.*;
 
 
 /**
@@ -41,7 +43,7 @@ public class AugerSubsystem extends Subsystem {
   public boolean isAugerNeutral() {
         double encoderValue = augerEncoder.getAverageVoltage();
         System.out.println(encoderValue);
-       if((1.5 < encoderValue) && (2.0 > encoderValue)) {
+       if((1.5 < encoderValue) && (1.7 > encoderValue)) {
            return true;
             }
        else{
