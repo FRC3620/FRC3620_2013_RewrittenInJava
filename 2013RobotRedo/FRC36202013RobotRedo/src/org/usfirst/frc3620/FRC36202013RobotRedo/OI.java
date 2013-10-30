@@ -121,7 +121,7 @@ public class OI {
         harvesterToggleOnOff = new JoystickButton(driveJoystick, 1);
         harvesterToggleOnOff.whenPressed(new HarvesterToggleCommand());
         driveDirectionToggle = new JoystickButton(driveJoystick, 8);
-        driveDirectionToggle.whenPressed(new DriveArcadeCommand());
+        driveDirectionToggle.whenPressed(new DriveToggleReverseCommand());
         driveTurboEnable = new JoystickButton(driveJoystick, 3);
         driveTurboEnable.whileHeld(new DriveArcadeCommand());
         liftRetract = new JoystickButton(driveJoystick, 7);

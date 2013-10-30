@@ -56,14 +56,19 @@ public class DriveSubsystem extends Subsystem {
         double move = hid.getY();
         SmartDashboard.putNumber("js.x", rotate);
         SmartDashboard.putNumber("js.y", move);
-        if (reverseMode) {
-            rotate = -rotate;
-            move = -move;
-        }
-        primaryDrive.arcadeDrive(move, rotate);
-        if (turbo) {
-            secondaryDrive.arcadeDrive(move, rotate);
+        if (true) {
+            if (reverseMode) {
+                rotate = -rotate;
+                move = -move;
+            }
+            primaryDrive.arcadeDrive(move, rotate);
+            if (turbo) {
+                secondaryDrive.arcadeDrive(move, rotate);
+            } else {
+                secondaryDrive.drive(0, 0);
+            }
         } else {
+            primaryDrive.arcadeDrive(hid);
             secondaryDrive.drive(0, 0);
         }
     }
@@ -130,8 +135,10 @@ public class DriveSubsystem extends Subsystem {
     }
     
     public void periodic (RobotMode robotMode) {
-        SmartDashboard.putNumber ("drive.l", Robot.driveSubsystem.leftDriveController.get());
-        SmartDashboard.putNumber ("drive.r", Robot.driveSubsystem.rightDriveController.get());
+        SmartDashboard.putNumber ("drive.l1", Robot.driveSubsystem.leftDriveController.get());
+        SmartDashboard.putNumber ("drive.r1", Robot.driveSubsystem.rightDriveController.get());
+        SmartDashboard.putNumber ("drive.l2", Robot.driveSubsystem.leftTurboController.get());
+        SmartDashboard.putNumber ("drive.r2", Robot.driveSubsystem.rightTurboController.get());
         SmartDashboard.putBoolean("drive.reverse", reverseMode);
     }
 }
