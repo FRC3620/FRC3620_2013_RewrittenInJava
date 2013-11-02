@@ -52,32 +52,36 @@ public class DriveSubsystem extends Subsystem {
      * @param turbo
      */
     public void arcadeDrive(GenericHID hid, boolean turbo) {
-        double x = hid.getX();
-        double y = hid.getY();
-        if (reverseMode) {
-            x = -x;
-            y = -y;
-        }
-        primaryDrive.arcadeDrive(x, y);
-        if (turbo) {
-            secondaryDrive.arcadeDrive(x, y);
+        double rotate = hid.getX();
+        double move = hid.getY();
+        SmartDashboard.putNumber("js.x", rotate);
+        SmartDashboard.putNumber("js.y", move);
+        if (true) {
+            if (reverseMode) {
+                rotate = -rotate;
+                move = -move;
+            }
+            primaryDrive.arcadeDrive(move, rotate);
+            if (turbo) {
+                secondaryDrive.arcadeDrive(move, rotate);
+            } else {
+                secondaryDrive.drive(0, 0);
+            }
         } else {
+            primaryDrive.arcadeDrive(hid);
             secondaryDrive.drive(0, 0);
         }
     }
-    /**
-     * Drive under autonomous, using primaryDrive only.
-     *
-     * @param outputMagnitude
-     * @param curve
-     */
-    public void drive(double outputMagnitude, double curve) {
-        //primaryDrive.drive(outputMagnitude, curve);
-        //secondaryDrive.drive(0, 0);
-        System.out.println("Drive is broken");
+    public void autonomousArcadeDrive(double move, double rotate) {
+        primaryDrive.arcadeDrive(move, rotate);
+        secondaryDrive.drive(0, 0);
     }
-    public void driveCorrectly(double x, double y) {
-        primaryDrive.arcadeDrive(x, y);
+    public void autonomousTankDrive(double l, double r) {
+        primaryDrive.tankDrive(l, r);
+        secondaryDrive.drive(0, 0);
+    }
+    public void autonomousDrive(double mag, double curve) {
+        primaryDrive.drive(mag, curve);
         secondaryDrive.drive(0, 0);
     }
     /**
@@ -111,21 +115,30 @@ public class DriveSubsystem extends Subsystem {
         return reverseMode;
     }
     
-    // TODO make sure we do the same for the secondary drive
-        boolean savedDriveSafety = primaryDrive.isSafetyEnabled();
+    boolean savedPrimaryDriveSafety = primaryDrive.isSafetyEnabled();
+    boolean savedSecondaryDriveSafety = secondaryDrive.isSafetyEnabled();
     public void onRobotModeChange (RobotMode robotMode) {
         if (robotMode == RobotMode.TEST) {
-            savedDriveSafety = primaryDrive.isSafetyEnabled();
+            savedPrimaryDriveSafety = primaryDrive.isSafetyEnabled();
+            savedSecondaryDriveSafety = secondaryDrive.isSafetyEnabled();
             System.out.println("disabling drive safety");
             primaryDrive.setSafetyEnabled(false);
+            secondaryDrive.setSafetyEnabled(false);
         } else {
-            System.out.println("put drive safety back: " + savedDriveSafety);
-            primaryDrive.setSafetyEnabled(savedDriveSafety);
+            System.out.println("put drive safety back: " + savedPrimaryDriveSafety + " " + savedSecondaryDriveSafety);
+            primaryDrive.setSafetyEnabled(savedPrimaryDriveSafety);
+            secondaryDrive.setSafetyEnabled(savedSecondaryDriveSafety);
         }
-     }
+        
+        // make sure reverse is in a known state whenever we disable/enable
+        setReverseMode(false);
+    }
     
     public void periodic (RobotMode robotMode) {
-        SmartDashboard.putNumber ("drive.l", Robot.driveSubsystem.leftDriveController.get());
-        SmartDashboard.putNumber ("drive.r", Robot.driveSubsystem.rightDriveController.get());
+        SmartDashboard.putNumber ("drive.l1", Robot.driveSubsystem.leftDriveController.get());
+        SmartDashboard.putNumber ("drive.r1", Robot.driveSubsystem.rightDriveController.get());
+        SmartDashboard.putNumber ("drive.l2", Robot.driveSubsystem.leftTurboController.get());
+        SmartDashboard.putNumber ("drive.r2", Robot.driveSubsystem.rightTurboController.get());
+        SmartDashboard.putBoolean("drive.reverse", reverseMode);
     }
 }

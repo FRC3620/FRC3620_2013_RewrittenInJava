@@ -38,12 +38,15 @@ public class  DriveTurnInPlaceCommand extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        double howFast = 0.4;
         if (howFar > 0) {
             // turn right
-            driveSubsystem.drive(0.25, 1.0);
+            //driveSubsystem.autonomousTankDrive(-howFast, howFast);
+            driveSubsystem.autonomousDrive(0.5, -1.0);
         } else {
             // turn left
-            driveSubsystem.drive(0.25, -1.0);
+            //driveSubsystem.autonomousTankDrive(howFast, -howFast);
+            driveSubsystem.autonomousDrive(0.5, 1.0);
         }
     }
     // Make this return true when this Command no longer needs to run execute()

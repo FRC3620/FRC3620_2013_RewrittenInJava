@@ -57,7 +57,7 @@ public class RobotMap {
         driveSubsystemPrimaryDrive.setExpiration(0.1);
         driveSubsystemPrimaryDrive.setSensitivity(0.5);
         driveSubsystemPrimaryDrive.setMaxOutput(1.0);
-        driveSubsystemPrimaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);        
+        //driveSubsystemPrimaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
         driveSubsystemLeftTurboController = new Jaguar(1, 4);
 	LiveWindow.addActuator("DriveSubsystem", "LeftTurboController", (Jaguar) driveSubsystemLeftTurboController);
         
@@ -70,7 +70,7 @@ public class RobotMap {
         driveSubsystemSecondaryDrive.setExpiration(0.1);
         driveSubsystemSecondaryDrive.setSensitivity(0.5);
         driveSubsystemSecondaryDrive.setMaxOutput(1.0);
-        driveSubsystemSecondaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);        
+        //driveSubsystemSecondaryDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);        
         driveSubsystemGyro = new Gyro(1, 1);
 	LiveWindow.addSensor("DriveSubsystem", "Gyro", driveSubsystemGyro);
         driveSubsystemGyro.setSensitivity(0.007);
