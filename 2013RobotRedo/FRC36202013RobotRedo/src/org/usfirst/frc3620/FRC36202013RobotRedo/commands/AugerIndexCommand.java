@@ -32,6 +32,7 @@ public class  AugerIndexCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println ("auger index initialized");
        startTime = System.currentTimeMillis();
        elapsedTime = System.currentTimeMillis() - startTime;
        
@@ -61,6 +62,7 @@ public class  AugerIndexCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        System.out.println ("auger index ended");
         Robot.augerSubsystem.augerHault();
     }
 
