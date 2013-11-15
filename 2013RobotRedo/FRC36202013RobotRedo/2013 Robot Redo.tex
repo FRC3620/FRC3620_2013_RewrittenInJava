@@ -82,40 +82,54 @@
 \section{Requirements}
 
 \subsection{Autonomous Requirements}
-Operator can pick one of this from the SmartDashboard.
+Operator can pick one of these from the SmartDashboard.
 \subsubsection{Box}
 Robot drives in a box.
 
 \subsubsection{Shoot3}
 Robot shoots 3 preloaded discs in place.
 
-It will actuate the tilt, set the tilt to some angle (that comes from the dashboard), then in parallel starts the shooter wheels, indexes 1. After index is complete, double pump the flipper, index, double pump, index, double pump. Then turn shooter wheels off, and set the tilt to 0 degrees.
+It actuates the tilt, sets the tilt to some angle (that comes from the dashboard), then in parallel starts the shooter wheels, indexes 1.
+After index is complete, it double pumps the flipper, indexes the next disk, double pumps, indexes, and double pumps.
+It then turns the shooter wheels off, and sets the tilt to 0 degrees.
 
 \subsection{Teleop Requirements}
 
+There are 3 user interface elements on the driver's station: a driver's joystick, a shooter's joystick, and a custom control panel for manually working the disk handling elements of the robot.
+
 \subsubsection{Driving}
-The driver joystick will control the motion of the robot on the floor. The robot will usually just use 4 of the 6 motors; if the Turbo button is depressed, all 6 motors will be used. The driver joystick also has a "reverse" button that toggles the robot between forward and reverse mode; when in reverse, the robot drives as if the read of the robot is now the front.
+The driver's joystick controls the motion of the robot on the floor.
+The robot usually uses 4 of the 6 motors; if the Turbo button is depressed, all 6 motors are used.
+The driver joystick also has a "reverse" button that toggles the robot between forward and reverse mode; when in reverse, the robot drives as if the rear of the robot is now the front.
 
 \subsubsection{Lift}
-There are 2 buttons on the driver's joystick. While the "up" button is pressed, the lift will extend, while the "down" button is pressed, the lift will retract.
+There are 2 lift buttons on the driver's joystick.
+While the "up" button is pressed, the lift extends, while the "down" button is pressed, the lift retracts.
 
 \subsubsection{Shooter}
-There is a button on the driver's joystick that when held, turns the shooter on. If the shooter is on, then the desired front speed is controller by driver's up and down buttons. There will be 2 speeds. The desired and actual RPM will be displayed on the dashboard.
+There is a button on the driver's joystick that, while held, turns the shooter on.
+If the shooter is on, then the desired front speed is controlled by driver's speed up and down buttons. There are 2 speeds.
+The desired and actual RPM are displayed on the dashboard.
 
 \subsubsection{Flipper}
-When the driver hits the shoot button, the flipper will move out for so long, wait for so long, retract for so long, then turn off. The control panel will have a manual override to work the flipper motorboth forwards and backwards.
+When the shoot button on the driver's joystick or control panel is pressed, the flipper will move out for so long, wait for so long, retract for so long, then turn off.
+The control panel has a manual override toggle switch to work the flipper motor either forwards or backwards while the switch is actuated.
 
 \subsubsection{Auger}
-If the switch at the bottom of the auger is hit, then the augur should index up one, unless there is a disk at the top.
-There will be a toggle switch on the control panel that will move the auger while the switch is actuated.
+If the switch at the bottom of the auger is hit, then the auger will index up one disk position, unless there is a disk at the top.
+There is a toggle switch on the control panel that will moves the auger either up or down while the switch is actuated.
 
 \subsubsection{Harvester}
-There will be a button on the joystick that will toggle both the harvester wheels and the belts. The toggle switches on the control panel will override the current joystick  button on/off setting. When the toggle is in the middle, the joystick on/off prevails.
-
-\emph{Is there also a manual override for the harvester wheels?}
+There is a button on the driver's joystick that toggles the harvester wheels and the belts on/off state.
+There are toggle switches on the control panel that override the on/off setting for the belt and harvester wheels separately.
+When the toggles are in the middle, the on/off setting prevails (when toggled on, the belt and harvester bring disks inward).
 
 \subsubsection{ShooterTilt}
-There will be a button that turns the tilt motor on and off. If the tilt motor is on, then the desired angle is controlled by up and down buttons on the joystick. Each depression will move the tilt 30 degrees up or down. The limits of travel will be 0 and 60 degrees. The actual and desired tilt will be displayed on the dashboard.
+There is a button on the shooter's joystick that turns the tilt motor on and off.
+If the tilt motor is on, then the desired angle is controlled by up and down buttons on the shooter's joystick.
+Each depression moves the tilt 30 degrees up or down. 
+The limits of travel are 0 and 60 degrees.
+The actual and desired tilt are displayed on the dashboard.
 
 \newpage
 
@@ -142,12 +156,20 @@ There will be a button that turns the tilt motor on and off. If the tilt motor i
 \end{itemize}
 
 \subsection {Command-Based Programming Common Practices}
-Generally, methods will be put into the subsystem to write to or read from the hardware; these routines should do as much as possible to disguise the hardware (in case we need to make a hardware change). If a Command is written so that it using an actual hardware device (DigitalIO, Victor, whatever), then something needs to be looked at.
+Generally, methods are put into the subsystem to write to or read from the hardware; these routines should do as much as possible to disguise the hardware (in case we need to make a hardware change). 
+If a Command is written so that it using an actual hardware device (DigitalIO, Victor, whatever), then something needs to be looked at.
 \begin{itemize}
-\item We will have a RobotMode class; it will be used to indicate what mode the robot is in (disabled, autonomous, teleop, test). This may be passed into \lstinline[]|void periodic()| methods in the subsystems.
-\item There will be an \lstinline[]|periodic(RobotMode robotmode)| method added to the Robot.java. The  \lstinline[]|teleopPeriodic()|,  \lstinline[]|autonomousPeriodic()|,  \lstinline[]|disabledPeriodic()|, and  \lstinline[]|testPeriodic()|
-should all call  \lstinline[]|periodic(RobotMode robotmode)|. This method will call the \lstinline[]|periodic(RobotMode robotmode)| in each of the subsystems that need it.
-\item Each subsystem will have a \lstinline[]|periodic(RobotMode robotmode)|, and \lstinline[]|init()| method added to it. The subsystem's \lstinline[]|periodic (RobotMode robotmode)| methods can update the dashboard, and possibly do other processing. \lstinline[]|init()| will be used for one time processing, such as setting up custom Buttons that are actuated by on-robot hardware (custom Buttons that are actuated by operator interface will be set up in OI.java).
+\item We have a RobotMode class; it is used to indicate what mode the robot is in (disabled, autonomous, teleop, test).
+This is passed into \lstinline[]|void periodic()| methods in the subsystems.
+\item There is a \lstinline[]|periodic(RobotMode)| method added to the Robot.java.
+The \lstinline[]|teleopPeriodic()|,  \lstinline[]|autonomousPeriodic()|,  \lstinline[]|disabledPeriodic()|, and  \lstinline[]|testPeriodic()| methods all call  \lstinline[]|periodic(RobotMode)|.
+This method calls the \lstinline[]|periodic(RobotMode)| in each of the subsystems that need it, and updates the dashboard and network tables with any robot-wide information.
+The subsystem's \lstinline[]|periodic(RobotMode)| methods update the dashboard and network tables with subsystem information.
+\item There is a \lstinline[]|onRobotModeChange(RobotMode)| method added to the Robot.java.
+The \lstinline[]|teleopInit()|,  \lstinline[]|autonomousInit()|,  \lstinline[]|disabledInit()|, and  \lstinline[]|testInit()| methods all call  \lstinline[]|onRobotModeChange(RobotMode)|.
+This method calls the \lstinline[]|onRobotModeChange(RobotMode)| in each of the subsystems that need it.
+Subsystems use this routine to reset any information that needs changing with the robot makes a change to a new mode (such as entering or leaving test mode).
+\item Subsystems may have a constructor added to them if they need to do one-time processing, such as setting up custom Buttons that are actuated by on-robot hardware (custom Buttons that are actuated by operator interface are set up in OI.java).
 \end{itemize}
 
 \newpage
@@ -190,7 +212,7 @@ The default command will be the DriveArcadeCommand command.
 \begin{description}[topsep=0ex]
 \item[requires] DriveSubsystem
 \item[initialization]  use resetGyro()
-\item[execute] Uses the arcadeDrive method to drive the robot.
+\item[execute] Uses the autonomousDrive, autonomousArcadeDrive, or autonomousTankDrive method to drive the robot.
 \item[isDone] finishes when the robot has turned far enough.
 \item[end] Turns off drive.
 \item[interrupted] Same as end();
@@ -200,7 +222,7 @@ The default command will be the DriveArcadeCommand command.
 \begin{description}[topsep=0ex]
 \item[requires] DriveSubsystem
 \item[initialization]  use resetEncoder()
-\item[execute] Uses the arcadeDrive method to drive the robot.
+\item[execute] Uses the autonomousDrive, autonomousArcadeDrive, or autonomousTankDrive method to drive the robot.
 \item[isDone] finishes when the robot has moved far enough.
 \item[end] Turns off drive.
 \item[interrupted] Same as end();
@@ -218,35 +240,60 @@ The default command will be the DriveArcadeCommand command.
 
 \subsubsection{Public Methods}
 
-\noindent \texttt{\textbf{public void arcadeDrive (GenericHID hid, boolean turbo)}} \\
-drives the robot using just the PrimaryDrive if turbo is false, or
-both PrimaryDrive and SecondaryDrive if turbo is true.
+\noindent
+\lstinline[]|public void arcadeDrive (GenericHID hid, boolean turbo)| \\
+drives the robot using just the PrimaryDrive if turbo is false, or both PrimaryDrive and SecondaryDrive if turbo is true.
+The robot drives in reverse if reverse mode is toggled on.
 
-\noindent \texttt{\textbf{public void drive (double outputMagnitude, double curve)}} \\
-use the PrimaryDrive to.
+\noindent
+\lstinline[]|public void autonomousDrive (double outputMagnitude, double curve)| \\
+uses the PrimaryDrive to drive the robot. 
+This is for use by autonomous modes.
 
-\noindent \texttt{\textbf{public void halt ()}} \\
-stop all drive motors.
+\noindent
+\lstinline[]|public void autonomousArcadeDrive (double move, double rotate)| \\
+uses the PrimaryDrive to drive the robot, as if a joystick were positioned at (move, rotate). 
+The reverse mode toggle is ignored (don't want the reverse mode setting screwing up autonomous).
+This is for use by autonomous modes.
+\textbf{Remember that Y axis pushed forward is a negative Y!}
 
-\noindent \texttt{\textbf{public void resetGyro ()}} \\
-reset the gyro.
+\noindent
+\lstinline[]|public void autonomousTankDrive (double l, double r)| \\
+uses the PrimaryDrive to drive the robot, with left side set to 'l' and right side set to 'r'.
+The reverse mode toggle is ignored (don't want the reverse mode setting screwing up autonomous).
+This is for use by autonomous modes.
+\textbf{Remember that Y axis pushed forward is a negative Y!}
 
-\noindent \texttt{\textbf{public double readGyro ()}} \\
-read the gyro heading in degrees.
+\noindent
+\lstinline[]|public void halt ()| \\
+stops all drive motors.
 
-\noindent \texttt{\textbf{public void resetEncoder ()}} \\
-reset the encoder.
+\noindent
+\lstinline[]|public void resetGyro ()| \\
+resets the gyro.
 
-\noindent \texttt{\textbf{public double readEncoder ()}} \\
-read the distance traveled in feet (meters, inches?)
+\noindent
+\lstinline[]|public double readGyro ()| \\
+reads the gyro heading in degrees.
 
-\noindent \texttt{\textbf{public void toggleReverseMode ()}} \\
+\noindent
+\lstinline[]|public void resetEncoder ()| \\
+resets the encoder.
+
+\noindent
+\lstinline[]|public double readEncoder ()| \\
+reads the distance traveled in meters.
+
+\noindent
+\lstinline[]|public void toggleReverseMode ()| \\
 toggles the reverse mode flag.
 
-\noindent \texttt{\textbf{public void setReverseMode (boolean \textit{reverse})}} \\
+\noindent
+\lstinline[]|public void setReverseMode (boolean reverse)| \\
 sets the reverse mode flag to \textit{reverse}.
 
-\noindent \texttt{\textbf{public boolean getReverseMode()}} \\
+\noindent
+\lstinline[]|public boolean getReverseMode()| \\
 returns the current value of the reverse modem flag.
 
 %------------------------------------------------------------
@@ -281,14 +328,17 @@ returns the current value of the reverse modem flag.
 
 \subsubsection{Public Methods}
 
-\noindent \texttt{\textbf{public void liftRetract()}} \\
-raises the robot (retracts the lift).
+\noindent
+\lstinline[]|public void liftRetract()| \\
+retracts the lift (lifts the robot).
 
-\noindent \texttt{\textbf{public void liftExtend()}} \\
-lowers the robot (extends the lift).
+\noindent
+\lstinline[]|public void liftExtend()| \\
+extends the lift (lowers the robot).
 
-\noindent \texttt{\textbf{public void liftHalt()}} \\
-freezes the robot.
+\noindent
+\lstinline[]|public void liftHalt()| \\
+freezes the lift.
 
 %------------------------------------------------------------
 
@@ -308,13 +358,13 @@ The front shooter runs at either 800 or 1600 RPM.
 
 \subsubsection{Commands}
 
-\paragraph{ShooterRunRearShooterCommand} is the default command for the subsystem, it keeps the rear motor power set. The front motor power does not need to  be set here because the PIDController keeps the front motor power set.
+\paragraph{ShooterRunRearShooterCommand} is the default command for the subsystem, it keeps the rear motor power set. The front motor power does not need to be set here because the FrontPid PIDController keeps the front motor power set.
 \begin{description}[topsep=0ex]
 \item[requires] ShooterSubSystem
 \item[initialization]  None.
-\item[execute] Send the desired motor power (getDesiredRearMotorPower) to the rear shooter motor (setRearMotorPower())
+\item[execute] Send the desired motor power (getDesiredRearMotorPower()) to the rear shooter motor (setRearMotorPower())
 \item[isDone] Runs until interrupted.
-\item[end] shuts down the rear shooter motor (setRearMotorPower())
+\item[end] shuts down the rear shooter motor (setRearMotorPower()).
 \item[interrupted] Same as end();
 \end{description}
 
@@ -370,32 +420,41 @@ The front shooter runs at either 800 or 1600 RPM.
 
 \subsubsection{Public Methods}
 
-\noindent \texttt{\textbf{public void setDesiredFrontRPM (double rpm)}} \\
+\noindent
+\lstinline[]|public void setDesiredFrontRPM (double rpm)| \\
 sets the desired speed for the front shooter motor.
 
-\noindent \texttt{\textbf{public double getDesiredFrontRPM ()}} \\
+\noindent
+\lstinline[]|public double getDesiredFrontRPM ()| \\
 gets the desired speed for the front shooter motor.
 
-\noindent \texttt{\textbf{public void setDesiredRearMotorPower (double power)}} \\
+\noindent
+\lstinline[]|public void setDesiredRearMotorPower (double power)| \\
 sets the desired power for the rear shooter motor (saves the desired power).
 
-\noindent \texttt{\textbf{public double getDesiredRearMotorPower ()}} \\
+\noindent
+\lstinline[]|public double getDesiredRearMotorPower ()| \\
 gets the desired power for the rear shooter motor.
 
-\noindent \texttt{\textbf{public double getCurrentFrontRPM ()}} \\
-gets the current speed for the front shooter motor.
+\noindent
+\lstinline[]|public double getCurrentFrontRPM ()| \\
+gets the current (actual) speed for the front shooter motor.
 
-\noindent \texttt{\textbf{public enableFrontPID ()}} \\
+\noindent
+\lstinline[]|public void enableFrontPID ()| \\
 starts the PID controller for the front motor.
 
-\noindent \texttt{\textbf{public disableFrontPID ()}} \\
+\noindent
+\lstinline[]|public void disableFrontPID ()| \\
 stops the PID controller for the front motor.
 
-\noindent \texttt{\textbf{public setRearShooterPower(double power)}} \\
+\noindent
+\lstinline[]|public void setRearShooterPower(double power)| \\
 set the power for rear shooter motor. Actually pokes the motor controller.
 
-\noindent \texttt{\textbf{public setFrontShooterPower(double power)}} \\
-set the power for front shooter motor. Actually pokes the motor controller. If the specified power is greater than 0.5, cap it at 0.5.
+\noindent
+\lstinline[]|public setFrontShooterPower(double power)| \\
+sets the power for front shooter motor. Actually pokes the motor controller. If the specified power is greater than 0.5, cap it at 0.5.
 
 %------------------------------------------------------------
 
@@ -464,7 +523,7 @@ turns the flipper motor off.
 
 \subsubsection{Actuators, Controllers, and Sensors}
 
-\textbf{AugerController} is the Victor controller for the chinup motors. \textit{Chris: check the old robot; this could be a Spike. If so, make the change here.}
+\textbf{AugerController} is the Victor controller for the auger motor. \textit{Chris: check the old robot; this could be a Spike. If so, make the change here.}
 
 \textbf{AugerLimitSwitch} is the digital input for the limit switch.
 
@@ -504,25 +563,32 @@ turns the flipper motor off.
 
 \subsubsection{Public Methods}
 
-\noindent \texttt{\textbf{public boolean readAugerLimitSwitch()}} \\
+\noindent
+\lstinline[]|public boolean readAugerLimitSwitch()| \\
 reads the limit switch at the bottom of the auger.
 
-\noindent \texttt{\textbf{public boolean isAugerNeutral()}} \\
+\noindent
+\lstinline[]|public boolean isAugerNeutral()| \\
 tells if the auger is in the neutral position.
 
-\noindent \texttt{\textbf{public void augerUp()}} \\
+\noindent
+\lstinline[]|public void augerUp()| \\
 turn the auger motor so that frisbees move to the top.
 
-\noindent \texttt{\textbf{public void augerDown()}} \\
+\noindent
+\lstinline[]|public void augerDown()| \\
 turn the auger motor so that frisbees move to the bottom.
 
-\noindent \texttt{\textbf{public void augerHalt()}} \\
+\noindent
+\lstinline[]|public void augerHalt()| \\
 turn the auger motor off.
 
 \subsubsection{Internal Methods}
 
-\noindent \texttt{\textbf{double readAugerEncoder()}} \\
-reads the auger position in degrees. I'll bet that updateDashboard() and isAugerNeutral() will use this.
+\noindent
+\lstinline[]|double readAugerEncoder()| \\
+reads the auger position in degrees.
+I'll bet that the code to update the dashboard and isAugerNeutral() use this.
 
 %------------------------------------------------------------
 
@@ -532,7 +598,7 @@ reads the auger position in degrees. I'll bet that updateDashboard() and isAuger
 
 \textbf{WheelsController} is the Victor controller for the harvester wheel motors.
 
-\textbf{BeltController} is the Spike for the belt motor. change here.}
+\textbf{BeltController} is the Spike for the belt motor.
 
 \subsubsection{Commands}
 
@@ -598,7 +664,8 @@ reads the auger position in degrees. I'll bet that updateDashboard() and isAuger
 
 \subsubsection{Public Methods}
 
-There will be a HarvesterDirection Java class to represent the desired direction for the Harvester. A HarvesterDirection can have three values HarvesterDirection.IN, HarvesterDirection.OUT, HarvesterDirection.OFF.
+There is a HarvesterDirection Java class that represents the desired direction for the Harvester components.
+A HarvesterDirection can have three values HarvesterDirection.IN, HarvesterDirection.OUT, HarvesterDirection.OFF.
 
 \noindent
 \lstinline[]|public void setOnOffState(boolean b)| \\
@@ -621,7 +688,7 @@ saves the desired manual belt direction.
 gets the desired manual belt direction.
 
 \noindent
-\lstinline[]|public void setWheelDirection (Relay.Value direction)| \\
+\lstinline[]|public void setWheelDirection (HarvesterDirection direction)| \\
 saves the desired harvester wheel direction.
 
 \noindent
@@ -719,22 +786,28 @@ runs the belt motor so that it spews disks out.
 
 \emph{This needs work.}
 
-\noindent \texttt{\textbf{public void enableShooterTilt()}} \\
+\noindent
+\lstinline[]|public void enableShooterTilt()| \\
 enables the shooter tilt.
 
-\noindent \texttt{\textbf{public void disableShooterTilt()}} \\
+\noindent
+\lstinline[]|public void disableShooterTilt()| \\
 disables the shooter tilt.
 
-\noindent \texttt{\textbf{public void toggleShooterTilt()}} \\
+\noindent
+\lstinline[]|public void toggleShooterTilt()| \\
 toggles the shooter tilt.
 
-\noindent \texttt{\textbf{public void setDesiredShooterTiltAngle(double degrees)}} \\
+\noindent
+\lstinline[]|public void setDesiredShooterTiltAngle(double degrees)| \\
 set (saves) the desired shooter tilt angle.
 
-\noindent \texttt{\textbf{public double getDesiredShooterTiltAngle()}} \\
-get the saved shooter tilt angle.
+\noindent
+\lstinline[]|public double getDesiredShooterTiltAngle()| \\
+gets the saved shooter tilt angle.
 
-\noindent \texttt{\textbf{public double getCurrentShooterTiltAngle()}} \\
+\noindent
+\lstinline[]|public double getCurrentShooterTiltAngle()| \\
 reads the current shooter tilt angle.
 
 %------------------------------------------------------------

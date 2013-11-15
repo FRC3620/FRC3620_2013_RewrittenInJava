@@ -11,8 +11,9 @@
 
 package org.usfirst.frc3620.FRC36202013RobotRedo.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
+import edu.wpi.first.wpilibj.command.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc3620.FRC36202013RobotRedo.*;
 
 /**
  *
@@ -30,10 +31,18 @@ public class  ShooterOffCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.shooterSubsystem.initCounter();
+        Robot.shooterSubsystem.setFastShooterPower(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.shooterSubsystem.setFastShooterPower(0);
+        System.out.println(Robot.shooterSubsystem.returnRPM());
+        System.out.println(Robot.shooterSubsystem.getCount());
+        SmartDashboard.putNumber("RPM", Robot.shooterSubsystem.returnRPM());
+        SmartDashboard.putNumber("Count", Robot.shooterSubsystem.getCount());
+        SmartDashboard.putNumber("Period", Robot.shooterSubsystem.getPeriod());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -43,10 +52,12 @@ public class  ShooterOffCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.shooterSubsystem.setFastShooterPower(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 }

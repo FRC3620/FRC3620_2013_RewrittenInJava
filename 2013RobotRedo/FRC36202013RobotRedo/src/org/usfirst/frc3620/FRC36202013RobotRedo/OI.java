@@ -8,10 +8,10 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package org.usfirst.frc3620.FRC36202013RobotRedo;
-import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc3620.FRC36202013RobotRedo.commands.*;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -119,7 +119,7 @@ public class OI {
         harvesterToggleOnOff = new JoystickButton(driveJoystick, 1);
         harvesterToggleOnOff.whenPressed(new HarvesterToggleCommand());
         driveDirectionToggle = new JoystickButton(driveJoystick, 8);
-        driveDirectionToggle.whenPressed(new DriveArcadeCommand());
+        driveDirectionToggle.whenPressed(new DriveToggleReverseCommand());
         driveTurboEnable = new JoystickButton(driveJoystick, 3);
         driveTurboEnable.whileHeld(new DriveArcadeCommand());
         liftRetract = new JoystickButton(driveJoystick, 7);
