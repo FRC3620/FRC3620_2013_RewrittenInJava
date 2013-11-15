@@ -17,9 +17,9 @@ import org.usfirst.frc3620.FRC36202013RobotRedo.Robot;
 /**
  *
  */
-public class  ShooterTiltEnableCommand extends Command {
+public class  ShooterTiltToggleCommand extends Command {
 
-    public ShooterTiltEnableCommand() {
+    public ShooterTiltToggleCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	
@@ -29,6 +29,9 @@ public class  ShooterTiltEnableCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        System.out.println("in command");
+        Robot.shooterTiltSubsystem.toggleShooterTilt();
+      
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,7 +40,7 @@ public class  ShooterTiltEnableCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
